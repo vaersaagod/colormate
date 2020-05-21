@@ -3,7 +3,7 @@ ColorMate plugin for Craft CMS
 
 Is that a tool in your pocket, or are you just happy to see me, mate!
   
-![Screenshot](resources/plugin-logo.png)
+![Screenshot](resources/img/plugin-logo.png)
 
 ## Requirements
 
@@ -84,8 +84,8 @@ return [
 
 ## Field type
 
-The field type returns a [Color]() model with the following 
-properties and methods:
+The field type returns a [Color](https://github.com/vaersaagod/colormate/blob/master/src/models/Color.php) 
+model with the following properties and methods:
 
 ### handle
 
