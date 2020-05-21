@@ -70,7 +70,7 @@ class ColorMateField extends Field
         }
         
         if (!is_array($value)) {
-            return [];
+            $value = [];
         }
 
         return $this->createColorModel($value);
