@@ -1,0 +1,29 @@
+{
+  "name": "colormate-assets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "build": "yarn parcel build src/*.js"
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  },
+  "dependencies": {
+    "color-string": "^1.5.3",
+    "components": "^0.1.0",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.0.2",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.23.3",
+    "vue-template-compiler": "^2.6.10"
+  }
+}

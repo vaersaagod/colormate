@@ -1,0 +1,13 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: "Preset" | t('colormate'),
+    warning: (not field.isNew() and not field.hasErrors('type') ? "Changing this may result in data loss." | t('site')),
+    id: 'preset',
+    name: 'preset',
+    options: presetOptions,
+    value: field['preset'],
+    errors: field.getErrors('preset') ?? null
+}) }}

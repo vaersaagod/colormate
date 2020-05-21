@@ -1,0 +1,43 @@
+{
+    "name": "vaersaagod/colormate",
+    "description": "Color me impressed, mate!",
+    "version": "1.0.0",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "color",
+        "palette"
+    ],
+    "support": {
+        "docs": "https://github.com/vaersaagod/colormate/blob/master/README.md",
+        "issues": "https://github.com/vaersaagod/colormate/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Værsågod",
+            "homepage": "https://www.vaersaagod.no"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.1.0",
+        "ssnepenthe/color-utils": "~0.4"
+    },
+    "autoload": {
+        "psr-4": {
+          "vaersaagod\\colormate\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "ColorMate",
+        "handle": "colormate",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/vaersaagod/colormate/master/CHANGELOG.md",
+        "components": {},
+        "class": "vaersaagod\\colormate\\ColorMate"
+    }
+}
