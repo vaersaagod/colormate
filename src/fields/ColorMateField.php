@@ -68,6 +68,10 @@ class ColorMateField extends Field
         if (is_string($value)) {
             $value = Json::decodeIfJson($value);
         }
+        
+        if (!is_array($value)) {
+            return [];
+        }
 
         return $this->createColorModel($value);
     }
@@ -212,7 +216,7 @@ class ColorMateField extends Field
         $fieldPreset = $settings['preset'];
         $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
         
-        if ($value['opacity'] === '') {
+        if (!isset($value['opacity']) || $value['opacity'] === '') {
             $value['opacity'] = 100;
         }
         
