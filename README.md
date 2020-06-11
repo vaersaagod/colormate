@@ -34,6 +34,7 @@ return [
                 'viewMode' => \vaersaagod\colormate\fields\ColorMateField::FIELD_VIEW_MODE_EXPANDED,
                 'showCustom' => true,
                 'showOpacity' => true,
+                'showClear' => false,
                 'colors' => [
                     'blush' => [
                         'name' => 'Blush',
@@ -60,6 +61,7 @@ return [
                 'viewMode' => \vaersaagod\colormate\fields\ColorMateField::FIELD_VIEW_MODE_COMPACT,
                 'showCustom' => false,
                 'showOpacity' => false,
+                'showClear' => true,
                 'colors' => [
                     'black-10p' => [
                         'name' => '10% black',

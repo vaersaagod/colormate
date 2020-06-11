@@ -9,17 +9,19 @@
             </li>
         </ul>
 
-        <div class="colormate-field__inputs input" v-if="showCustom || showOpacity">
-            <div class="colormate-field__color -custom-color" v-bind:class="{ '-selected-color': parsedCustomColor !== null }" v-if="showCustom">
-                <span class="colormate-field__color-inner" v-bind:style="'background-color:' + (parsedCustomColor ? parsedCustomColor : '#fff') + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
-            </div>
+        <div class="colormate-field__inputs input" v-if="showCustom || showOpacity || showClear">
             <div class="colormate-field__input-wrap" v-if="showCustom">
+                <div class="colormate-field__color -custom-color" v-bind:class="{ '-selected-color': parsedCustomColor !== null }">
+                    <span class="colormate-field__color-inner" v-bind:style="'background-color:' + (parsedCustomColor ? parsedCustomColor : '#fff') + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
+                </div>
                 <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
             </div>
+            
             <div class="colormate-field__input-wrap" v-if="showOpacity">
                 <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
             </div>
-            <div class="colormate-field__clear" v-on:click="onClearClick" v-if="(selectedColorHandle !== '' && selectedColorHandle !== presetConfig.default) || customColor !== '' || parseInt(customOpacityInput) !== 100">
+            
+            <div class="colormate-field__clear" v-on:click="onClearClick" v-if="showClear && ((selectedColorHandle !== '' && selectedColorHandle !== presetConfig.default) || customColor !== '' || parseInt(customOpacityInput) !== 100)">
                 <div class="colormate-field__clear-inner"></div>
             </div>
         </div>
@@ -92,6 +94,7 @@
                 viewMode: '',
                 showCustom: false,
                 showOpacity: false,
+                showClear: false,
                 colors: [],
                 selectedColorHandle: '',
                 tempSelectedColorHandle: '',
@@ -117,9 +120,11 @@
             }
         },
         mounted() {
+            console.log(this.presetConfig);
             this.colors = this.presetConfig.colors;
             this.showCustom = this.presetConfig.showCustom;
             this.showOpacity = this.presetConfig.showOpacity;
+            this.showClear = this.presetConfig.showClear;
 
             this.handleInputId = this.baseInputId + '-handle';
             this.customInputId = this.baseInputId + '-custom';
@@ -221,11 +226,12 @@
         }
 
         &__inputs {
-            margin-left: 12px;
             display: flex;
         }
 
         &__input-wrap {
+            display: flex;
+            margin-left: 12px;
         }
 
         &__input-color {
@@ -235,14 +241,14 @@
 
         &__input-opacity {
             width: 60px;
-            margin-left: 17px;
+            margin-left: 5px;
         }
 
         &__clear {
             cursor: pointer;
             padding: 5px;
-            margin-left: 12px;
             margin-top: 3px;
+            margin-left: 12px;
 
             &:hover {
                 .colormate-field__clear-inner {

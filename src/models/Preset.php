@@ -42,7 +42,7 @@ class Preset extends Model
     /**
      * @var boolean
      */
-    public $showClear = false;
+    public $showClear = true;
 
     /**
      * @var boolean
