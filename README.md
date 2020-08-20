@@ -1,7 +1,7 @@
 ColorMate plugin for Craft CMS
 ===
 
-Is that a tool in your pocket, or are you just happy to see me, mate!
+Color me impressed, mate!
   
 ![Screenshot](resources/img/plugin-logo.png)
 
