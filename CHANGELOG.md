@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 1.0.3 - 2020-08-20
+### Fixed
+- Fixed issue that could cause an exception when previewing a draft (fixes #3).
+
 ## 1.0.2 - 2020-06-11
 ### Added
 - Added/implemented `showClear` preset config setting.
