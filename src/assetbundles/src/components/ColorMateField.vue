@@ -120,7 +120,6 @@
             }
         },
         mounted() {
-            console.log(this.presetConfig);
             this.colors = this.presetConfig.colors;
             this.showCustom = this.presetConfig.showCustom;
             this.showOpacity = this.presetConfig.showOpacity;
