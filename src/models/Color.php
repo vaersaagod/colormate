@@ -93,7 +93,11 @@ class Color extends Model
             return null;
         }
         
-        $color = ColorMate::$plugin->color->getColor($this->baseColor);
+        try {
+            $color = ColorMate::$plugin->color->getColor($this->baseColor);
+        } catch (\Throwable $e) {
+            return null;
+        }
         
         if ($this->opacity !== 100) {
             $opacityAdjust = $this->opacity/100;
