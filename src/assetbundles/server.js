@@ -1,4 +1,5 @@
 // This file exists so we can haz HMR
+require('dotenv').config();
 const proxy = require('http-proxy-middleware');
 const Bundler = require('parcel-bundler');
 const express = require('express');
@@ -13,11 +14,16 @@ const bundler = new Bundler(entries, {
 
 const app = express();
 
+const { PROXY_URL } = process.env;
+
+if (!PROXY_URL) {
+    throw new Error('No URL to proxy. Create a .env file in this directory and add a PROXY_URL variable to it');
+}
+
 app.use(
     '/',
     proxy({
-        //target: 'http://talormade.test:3000',
-        target: 'http://craft3latest.test',
+        target: PROXY_URL,
         changeOrigin: true
     })
 );
