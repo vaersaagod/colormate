@@ -147,6 +147,19 @@
                     this.customOpacityInput = this.fieldValue.opacity;
                 }
             }
+
+            // Prevent unwanted window unload confirm dialogs due to Craft serializing the initial DOM state before ColorMate boots up
+            requestAnimationFrame(() => {
+              var $editor = $(this.$el).closest('.element-editor,.hud');
+              if ($editor.length) {
+                this.elementEditor = $editor.data('elementEditor') || {};
+                if (this.elementEditor.slideout) {
+                  this.elementEditor.initialData = this.elementEditor.slideout.$container.serialize();
+                } else if (this.elementEditor.hud) {
+                  this.elementEditor.initialData = this.elementEditor.hud.$body.serialize();
+                }
+              }
+            });
         }
     }
 </script>

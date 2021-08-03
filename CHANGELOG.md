@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 1.0.4 - 2021-08-03
+### Fixed  
+- Fixed issue where ColorMate could trigger unneccessary window unload confirm dialogs in element editor huds and slideouts  
+
 ## 1.0.3 - 2020-08-20
 ### Fixed
 - Fixed issue that could cause an exception when previewing a draft (fixes #3).
