@@ -11,7 +11,7 @@
     "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "dependencies": {
-    "color-string": "^1.5.3",
+    "color-string": "^1.5.5",
     "components": "^0.1.0",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.4"
