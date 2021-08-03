@@ -16,7 +16,7 @@
     <input id="{{ name }}-opacity" type="hidden" name="{{ name }}[opacity]" value="">
     
     {% js %}
-        new Craft.ColorMateField({ 
+        Craft.ColorMateField({
             appId: '#{{ namespacedId ~ '-app' }}', 
             baseInputId: '{{ namespacedId }}', 
             presetConfig: {{ presetConfig|json_encode|raw }},
