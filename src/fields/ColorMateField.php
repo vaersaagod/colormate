@@ -14,6 +14,7 @@ use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\base\PreviewableFieldInterface;
 use craft\helpers\Json;
 
 use vaersaagod\colormate\assetbundles\ColorMateFieldBundle;
@@ -31,7 +32,7 @@ use yii\db\Schema;
  * @property string $contentColumnType
  * @property string $settingsHtml
  */
-class ColorMateField extends Field
+class ColorMateField extends Field implements PreviewableFieldInterface
 {
     const FIELD_VIEW_MODE_COMPACT = 'compact';
     const FIELD_VIEW_MODE_EXPANDED = 'expanded';
@@ -179,6 +180,20 @@ class ColorMateField extends Field
                 $element->addModelErrors($fieldValue, $this->handle);
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        /** @var Color|null $value */
+        if (!$value) {
+            return '<div class="color small static"><div class="color-preview"></div></div>';
+        }
+
+        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->getColor('hex')};'></div></div>" .
+            "<div class='colorhex code'>{$value->getColor('hex')}</div>";
     }
 
     
