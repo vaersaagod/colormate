@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 1.0.5 - 2022-01-28
+### Added
+- Added/implemented PreviewableFieldInterface 
+
 ## 1.0.4 - 2021-08-03
 ### Fixed  
 - Fixed issue where ColorMate could trigger unneccessary window unload confirm dialogs in element editor huds and slideouts  
