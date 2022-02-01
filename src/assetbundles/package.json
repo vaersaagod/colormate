@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "build": "yarn parcel build src/*.js"
+    "build": "yarn parcel build src/*.js --no-source-maps"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"
