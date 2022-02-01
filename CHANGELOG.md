@@ -1,5 +1,12 @@
 # ColorMate Changelog
 
+## 1.0.6 - 2022-02-01
+### Added
+- Added color picker to custom color selection
+
+### Fixed
+- Fixed minor visual glitch when not using a palette
+
 ## 1.0.5 - 2022-01-28
 ### Added
 - Added/implemented PreviewableFieldInterface 
