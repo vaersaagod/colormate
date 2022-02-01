@@ -176,6 +176,9 @@
         li {
             display: inline-block;
         }
+        ul {
+          margin-right: 12px;
+        }
 
         &__color {
             position: relative;
@@ -244,6 +247,10 @@
         &__input-wrap {
             display: flex;
             margin-left: 12px;
+          
+          &:first-child {
+            margin-left: 0;
+          }
         }
 
         &__input-color {
