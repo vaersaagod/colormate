@@ -101,7 +101,7 @@ class Color extends Model
         
         if ($this->opacity !== 100) {
             $opacityAdjust = $this->opacity/100;
-            $color = ColorMate::$plugin->color->adjustColor($color, ['alpha' => ($color->getRgb()->getAlpha() * $opacityAdjust) * -1]);
+            $color = ColorMate::$plugin->color->adjustColor($color, ['alpha' => (1 - ($color->getRgb()->getAlpha() * $opacityAdjust)) * -1]);
         }
         
         if ($format==='hex') {
