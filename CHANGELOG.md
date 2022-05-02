@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 1.0.7 - 2022-05-02
+### Fixed
+- Fixed incorrect calculation of alpha component in output color
+
 ## 1.0.6 - 2022-02-01
 ### Added
 - Added color picker to custom color selection
