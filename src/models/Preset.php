@@ -51,6 +51,11 @@ class Preset extends Model
     public bool $showOpacity = false;
 
     /**
+     * @var boolean
+     */
+    public bool $showTooltip = true;
+
+    /**
      * @var array
      */
     public array $colors = [];

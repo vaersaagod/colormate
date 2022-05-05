@@ -5,7 +5,7 @@
                 <div class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
                 </div>
-                <span class="colormate-field__color-name">{{ color.name }}</span>
+                <span v-if="showTooltip" class="colormate-field__color-name">{{ color.name }}</span>
             </li>
         </ul>
 
@@ -101,6 +101,7 @@ export default {
             showCustom: false,
             showOpacity: false,
             showClear: false,
+            showTooltip: true,
             colors: [],
             selectedColorHandle: '',
             tempSelectedColorHandle: '',
@@ -131,6 +132,7 @@ export default {
         this.showCustom = this.presetConfig.showCustom;
         this.showOpacity = this.presetConfig.showOpacity;
         this.showClear = this.presetConfig.showClear;
+        this.showTooltip = this.presetConfig.showTooltip;
 
         this.handleInputId = this.baseInputId + '-handle';
         this.customInputId = this.baseInputId + '-custom';

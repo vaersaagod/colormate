@@ -35,6 +35,7 @@ return [
                 'showCustom' => true,
                 'showOpacity' => true,
                 'showClear' => false,
+                'showTooltip' => true,
                 'colors' => [
                     'blush' => [
                         'name' => 'Blush',
