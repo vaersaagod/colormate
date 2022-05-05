@@ -3,26 +3,30 @@
 {% import "_includes/forms" as forms %}
 
 <div class="colormate">
-    <div id="{{ name ~ '-app' }}" style="min-height: 45px;">
-        <color-mate-field
-            :base-input-id="baseInputId"
-            :preset-config="presetConfig"
-            :field-value="fieldValue">
-        </color-mate-field>
-    </div>
-    
-    <input id="{{ name }}-handle" type="hidden" name="{{ name }}[handle]" value="">
-    <input id="{{ name }}-custom" type="hidden" name="{{ name }}[custom]" value="">
-    <input id="{{ name }}-opacity" type="hidden" name="{{ name }}[opacity]" value="">
-    
-    {% js %}
-        Craft.ColorMateField({
-            appId: '#{{ namespacedId ~ '-app' }}', 
-            baseInputId: '{{ namespacedId }}', 
-            presetConfig: {{ presetConfig|json_encode|raw }},
-            fieldValue: {{ value|json_encode|raw }}
-        });
-    {% endjs %}
+    {% if presetConfig %}
+        <div id="{{ name ~ '-app' }}" style="min-height: 45px;">
+            <color-mate-field
+                :base-input-id="baseInputId"
+                :preset-config="presetConfig"
+                :field-value="fieldValue">
+            </color-mate-field>
+        </div>
+        
+        <input id="{{ name }}-handle" type="hidden" name="{{ name }}[handle]" value="">
+        <input id="{{ name }}-custom" type="hidden" name="{{ name }}[custom]" value="">
+        <input id="{{ name }}-opacity" type="hidden" name="{{ name }}[opacity]" value="">
+        
+        {% js %}
+            Craft.ColorMateField({
+                appId: '#{{ namespacedId ~ '-app' }}', 
+                baseInputId: '{{ namespacedId }}', 
+                presetConfig: {{ presetConfig|json_encode|raw }},
+                fieldValue: {{ value|json_encode|raw }}
+            });
+        {% endjs %}
+    {% else %}
+        <div class="error">{{ 'The selected preset does not exist.'|t }}</div>
+    {% endif %}
     
     {% if model and model.hasErrors() %}
         {% for error in model.getErrors() %}

@@ -132,7 +132,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             'settings' => $this->getSettings(),
             'value' => $value->getAttributes(),
             'model' => $value,
-            'presetConfig' => $presetConfig->getAttributes(),
+            'presetConfig' => $presetConfig?->getAttributes(),
         ]);
     }
 
