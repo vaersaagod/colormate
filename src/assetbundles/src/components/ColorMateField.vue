@@ -4,8 +4,8 @@
             <li v-for="color in colors">
                 <div class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
-                    <span class="colormate-field__color-name">{{ color.name }}</span>
                 </div>
+                <span class="colormate-field__color-name">{{ color.name }}</span>
             </li>
         </ul>
 
@@ -71,7 +71,7 @@ export default {
             }
 
             this.customColor = val;
-            
+
             if (this.customColor.length >= 7) {
                 this.customColorPickerInput = this.customColor;
             }
@@ -95,7 +95,7 @@ export default {
             document.getElementById(this.opacityInputId).value = val;
         }
     },
-    data: function () {
+    data: function() {
         return {
             viewMode: '',
             showCustom: false,
@@ -189,6 +189,10 @@ export default {
         margin-right: 12px;
     }
 
+    li {
+        position: relative;
+    }
+
     &__color {
         position: relative;
         display: inline-block;
@@ -208,7 +212,40 @@ export default {
         }
 
         &-name {
-            display: none;
+            display: inline-block;
+            position: absolute;
+            z-index: 2;
+            padding: 3px 10px;
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fdfdfd;
+            font-size: 11px;
+            left: 17px;
+            top: -22px;
+            white-space: nowrap;
+            pointer-events: none;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition-property: opacity, top;
+            transition-duration: 0.1s, 0.5s;
+            transition-timing-function: ease-out, cubic-bezier(0.22, 1, 0.36, 1);
+            
+            &:after {
+                content: '';
+                position: absolute;
+                left: calc(50% - 5px);
+                bottom: -6px;
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid rgba(0, 0, 0, 0.7);
+            }
+
+            li:hover & {
+                opacity: 1;
+                top: -28px;
+            }
         }
 
         &:not(.-selected-color) {
@@ -254,16 +291,16 @@ export default {
             top: 150%;
             margin: -11px 0 0 -11px;
             transition: top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000);
-        
+
             .colormate-field--has-no-palette & {
                 display: none;
             }
         }
-        
+
 
         &.-selected-color:after {
             top: 50%;
-            
+
         }
     }
 
