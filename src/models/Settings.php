@@ -1,16 +1,15 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate\models;
 
-use Craft;
 use craft\base\Model;
 
 /**
@@ -26,19 +25,11 @@ class Settings extends Model
     /**
      * @var array
      */
-    public $presets = [];
+    public array $presets = [];
 
     // Public Methods
     // =========================================================================
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [];
-    }
-
+    
     /**
      * @return Preset[]
      */
@@ -58,9 +49,10 @@ class Settings extends Model
 
     /**
      * @param string $handle
+     *
      * @return Preset|null
      */
-    public function getPresetByHandle($handle)
+    public function getPresetByHandle(string $handle): ?Preset
     {
         if (!isset($this->presets[$handle])) {
             return null;

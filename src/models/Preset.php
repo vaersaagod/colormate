@@ -1,16 +1,15 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate\models;
 
-use Craft;
 use craft\base\Model;
 use vaersaagod\colormate\fields\ColorMateField;
 
@@ -21,61 +20,46 @@ use vaersaagod\colormate\fields\ColorMateField;
  */
 class Preset extends Model
 {
-    // Public Properties
-    // =========================================================================
+    /**
+     * @var string
+     */
+    public string $name = '';
 
     /**
      * @var string
      */
-    public $name = '';
+    public string $handle = '';
 
     /**
      * @var string
      */
-    public $handle = '';
-
-    /**
-     * @var string
-     */
-    public $viewMode = ColorMateField::FIELD_VIEW_MODE_COMPACT;
+    public string $viewMode = ColorMateField::FIELD_VIEW_MODE_COMPACT;
 
     /**
      * @var boolean
      */
-    public $showClear = true;
+    public bool $showClear = true;
 
     /**
      * @var boolean
      */
-    public $showCustom = false;
+    public bool $showCustom = false;
 
     /**
      * @var boolean
      */
-    public $showOpacity = false;
+    public bool $showOpacity = false;
 
     /**
      * @var array
      */
-    public $colors = [];
+    public array $colors = [];
     
     /**
      * @var string|null
      */
-    public $default = null;
-
+    public ?string $default = null;
     
-
-    // Public Methods
-    // =========================================================================
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [];
-    }
 
     /**
      * @return PresetColor[]
@@ -96,9 +80,10 @@ class Preset extends Model
     
     /**
      * @param string $handle
+     *
      * @return PresetColor|null
      */
-    public function getColorByHandle($handle)
+    public function getColorByHandle(string $handle): ?PresetColor
     {
         if (!isset($this->colors[$handle])) {
             return null;

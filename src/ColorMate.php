@@ -1,16 +1,17 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate;
 
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
@@ -37,32 +38,21 @@ class ColorMate extends Plugin
     // Static Properties
     // =========================================================================
 
-    /**
-     * @var ColorMate
-     */
-    public static $plugin;
+    public static ColorMate $plugin;
 
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var string
-     */
-    public $schemaVersion = '1.0.0';
-
+    
     // Public Methods
     // =========================================================================
 
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
-
-        /** @var Settings $settings */
-        $settings = $this->getSettings();
 
         // Register services
         $this->setComponents([
@@ -91,7 +81,7 @@ class ColorMate extends Plugin
     /**
      * @inheritdoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): ?Model
     {
         return new Settings();
     }
@@ -99,7 +89,7 @@ class ColorMate extends Plugin
     /**
      * @param RegisterComponentTypesEvent $event
      */
-    public function onRegisterFieldTypes(RegisterComponentTypesEvent $event)
+    public function onRegisterFieldTypes(RegisterComponentTypesEvent $event): void
     {
         $event->types[] = ColorMateField::class;
     }

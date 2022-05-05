@@ -1,18 +1,17 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate\services;
 
 use craft\base\Component;
 
-use craft\test\mockclasses\ToString;
 use SSNepenthe\ColorUtils\Colors\Color;
 use vaersaagod\colormate\models\Color as ColorMateColor;
 use function SSNepenthe\ColorUtils\{
@@ -46,20 +45,22 @@ use function SSNepenthe\ColorUtils\{
 class ColorService extends Component
 {
     /**
-     * @param string|array $c
+     * @param array|string $c
+     *
      * @return Color
      */
-    public function getColor($c): Color
+    public function getColor(array|string $c): Color
     {
         return $this->normalizeColor($c);
     }
 
     /**
-     * @param string|array|Color|ColorMateColor $color
-     * @param array $adjustment
+     * @param array|string|Color|ColorMateColor $color
+     * @param array                             $adjustment
+     *
      * @return Color
      */
-    public function adjustColor($color, $adjustment): Color
+    public function adjustColor(array|ColorMateColor|Color|string $color, array $adjustment): Color
     {
         $c = $this->normalizeColor($color);
         return adjust_color($c, $adjustment);
@@ -68,10 +69,11 @@ class ColorService extends Component
     /**
      * Calculates color brightness (https://www.w3.org/TR/AERT#color-contrast) on a scale from 0 (black) to 255 (white). 
      * 
-     * @param string|array|Color|ColorMateColor $color
+     * @param array|string|Color|ColorMateColor $color
+     *
      * @return float
      */
-    public function getBrightness($color): float
+    public function getBrightness(array|ColorMateColor|Color|string $color): float
     {
         $c = $this->normalizeColor($color);
         return brightness($c);
@@ -80,10 +82,11 @@ class ColorService extends Component
     /**
      * Get the hue channel of a color.
      * 
-     * @param string|array|Color|ColorMateColor $color
+     * @param array|string|Color|ColorMateColor $color
+     *
      * @return float
      */
-    public function getHue($color): float
+    public function getHue(array|ColorMateColor|Color|string $color): float
     {
         $c = $this->normalizeColor($color);
         return hue($c);
@@ -92,10 +95,11 @@ class ColorService extends Component
     /**
      * Get the lightness channel of a color
      * 
-     * @param string|array|Color|ColorMateColor $color
+     * @param array|string|Color|ColorMateColor $color
+     *
      * @return float
      */
-    public function getLightness($color): float
+    public function getLightness(array|ColorMateColor|Color|string $color): float
     {
         $c = $this->normalizeColor($color);
         return lightness($c);
@@ -104,11 +108,12 @@ class ColorService extends Component
     /**
      * Checks brightness($color) >= $threshold. Accepts an optional $threshold float as the last parameter with a default of 127.5. 
      *
-     * @param string|array|Color|ColorMateColor $color
-     * @param float $threshold
+     * @param array|string|Color|ColorMateColor $color
+     * @param float                             $threshold
+     *
      * @return bool
      */
-    public function isBright($color, $threshold=127.5): bool
+    public function isBright(array|ColorMateColor|Color|string $color, float $threshold=127.5): bool
     {
         $c = $this->normalizeColor($color);
         return is_bright($c, $threshold);
@@ -117,11 +122,12 @@ class ColorService extends Component
     /**
      * Checks lightness($color) >= $threshold. Accepts an optional $threshold float as the last parameter with a default of 50.0. 
      * 
-     * @param string|array|Color|ColorMateColor $color
-     * @param int $threshold
+     * @param array|string|Color|ColorMateColor $color
+     * @param int                               $threshold
+     *
      * @return bool
      */
-    public function isLight($color, $threshold=50): bool
+    public function isLight(array|ColorMateColor|Color|string $color, int $threshold=50): bool
     {
         $c = $this->normalizeColor($color);
         return is_light($c, $threshold);
@@ -130,11 +136,12 @@ class ColorService extends Component
     /**
      * Checks perceived_brightness($color) >= $threshold. Accepts an optional $threshold float as the last parameter with a default of 127.5. 
      * 
-     * @param string|array|Color|ColorMateColor $color
-     * @param float $threshold
+     * @param array|string|Color|ColorMateColor $color
+     * @param float                             $threshold
+     *
      * @return bool
      */
-    public function looksBright($color, $threshold = 127.5): bool
+    public function looksBright(array|ColorMateColor|Color|string $color, float $threshold = 127.5): bool
     {
         $c = $this->normalizeColor($color);
         return looks_bright($c, $threshold);
@@ -143,10 +150,11 @@ class ColorService extends Component
     /**
      * Calculates the perceived brightness (http://alienryderflex.com/hsp.html) of a color on a scale from 0 (black) to 255 (white).
      * 
-     * @param string|array|Color|ColorMateColor $color
+     * @param array|string|Color|ColorMateColor $color
+     *
      * @return float
      */
-    public function getPercievedBrightness($color): float 
+    public function getPercievedBrightness(array|ColorMateColor|Color|string $color): float 
     {
         $c = $this->normalizeColor($color);
         return perceived_brightness($c);
@@ -155,10 +163,11 @@ class ColorService extends Component
     /**
      * Calculates the relative luminance (https://www.w3.org/TR/WCAG20/#relativeluminancedef) of a color on a scale from 0 (black) to 1 (white).
      * 
-     * @param string|array|Color|ColorMateColor $color
+     * @param array|string|Color|ColorMateColor $color
+     *
      * @return float
      */
-    public function getRelativeLuminance($color): float 
+    public function getRelativeLuminance(array|ColorMateColor|Color|string $color): float 
     {
         $c = $this->normalizeColor($color);
         return relative_luminance($c);
@@ -170,7 +179,7 @@ class ColorService extends Component
      * @param string|array|Color|ColorMateColor $color
      * @return float
      */
-    public function getSaturation($color): float 
+    public function getSaturation(array|ColorMateColor|Color|string $color): float 
     {
         $c = $this->normalizeColor($color);
         return saturation($c);
@@ -183,7 +192,7 @@ class ColorService extends Component
      * @param string|array|Color|ColorMateColor $color2
      * @return float
      */
-    public function getBrightnessDifference($color1, $color2): float
+    public function getBrightnessDifference(array|ColorMateColor|Color|string $color1, array|ColorMateColor|Color|string $color2): float
     {
         $c1 = $this->normalizeColor($color1);
         $c2 = $this->normalizeColor($color2);
@@ -197,7 +206,7 @@ class ColorService extends Component
      * @param string|array|Color|ColorMateColor $color2
      * @return int
      */
-    public function getColorDifference($color1, $color2): int
+    public function getColorDifference(array|ColorMateColor|Color|string $color1, array|ColorMateColor|Color|string $color2): int
     {
         $c1 = $this->normalizeColor($color1);
         $c2 = $this->normalizeColor($color2);
@@ -211,7 +220,7 @@ class ColorService extends Component
      * @param string|array|Color|ColorMateColor $color2
      * @return float
      */
-    public function getContrastRatio($color1, $color2): float
+    public function getContrastRatio(array|ColorMateColor|Color|string $color1, array|ColorMateColor|Color|string $color2): float
     {
         $c1 = $this->normalizeColor($color1);
         $c2 = $this->normalizeColor($color2);
@@ -225,7 +234,7 @@ class ColorService extends Component
      *
      * @return string
      */
-    public function rgb2hex($color): string
+    public function rgb2hex(array|ColorMateColor|Color|string $color): string
     {
         $c = $this->normalizeColor($color);
         return '#' . sprintf('%02x', $c->getRgb()->getRed()) . sprintf('%02x', $c->getRgb()->getGreen()) . sprintf('%02x', $c->getRgb()->getBlue());
@@ -238,7 +247,7 @@ class ColorService extends Component
      *
      * @return array
      */
-    public function hex2rgb($hex): array
+    public function hex2rgb(string $hex): array
     {
         $hex = str_replace('#', '', $hex);
 
@@ -259,7 +268,7 @@ class ColorService extends Component
      * @param mixed $val
      * @return Color
      */
-    private function normalizeColor($val): Color {
+    private function normalizeColor(mixed $val): Color {
         if ($val instanceof Color) {
             return $val;
         }

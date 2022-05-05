@@ -1,11 +1,11 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate\fields;
@@ -27,17 +27,19 @@ use yii\db\Schema;
 
 /**
  * Class ColorMateField
+ *
  * @package ColorMate
  *
- * @property string $contentColumnType
- * @property string $settingsHtml
+ * @property string        $contentColumnType
+ * @property-read string[] $elementValidationRules
+ * @property string        $settingsHtml
  */
 class ColorMateField extends Field implements PreviewableFieldInterface
 {
-    const FIELD_VIEW_MODE_COMPACT = 'compact';
-    const FIELD_VIEW_MODE_EXPANDED = 'expanded';
+    public const FIELD_VIEW_MODE_COMPACT = 'compact';
+    public const FIELD_VIEW_MODE_EXPANDED = 'expanded';
 
-    public $preset = '';
+    public string $preset = '';
 
     /**
      * @return string
@@ -56,11 +58,12 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
-     * @return mixed|Color
+     *
+     * @return mixed
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
     {
         if ($value instanceof Color) {
             return $value;
@@ -69,7 +72,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         if (is_string($value)) {
             $value = Json::decodeIfJson($value);
         }
-        
+
         if (!is_array($value)) {
             $value = [];
         }
@@ -78,15 +81,16 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
+     *
      * @return array|mixed|string|null
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ElementInterface $element = null): mixed
     {
         return parent::serializeValue(array_filter(
             $value instanceof Color ? $value->getAttributes() : $value,
-            static function ($key) {
+            static function($key) {
                 return in_array($key, [
                     'handle',
                     'custom',
@@ -98,12 +102,13 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
+     *
      * @return string
      * @throws Throwable
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         /** @var Settings $pluginSettings */
         $pluginSettings = ColorMate::$plugin->getSettings();
@@ -129,9 +134,8 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             'model' => $value,
             'presetConfig' => $presetConfig->getAttributes(),
         ]);
-
     }
-    
+
     /**
      * @return string
      * @throws Throwable
@@ -149,7 +153,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             'presetOptions' => $presetOptions
         ]);
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -157,7 +161,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     {
         return empty($value->handle) && empty($value->custom);
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -166,17 +170,12 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         return ['validateField'];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function validateField(Element $element)
+    public function validateField(Element $element): void
     {
-        if ($element->getScenario() === Element::SCENARIO_LIVE)
-        {
+        if ($element->getScenario() === Element::SCENARIO_LIVE) {
             $fieldValue = $element->getFieldValue($this->handle);
-            
-            if($fieldValue && !$fieldValue->validate())
-            {
+
+            if ($fieldValue && !$fieldValue->validate()) {
                 $element->addModelErrors($fieldValue, $this->handle);
             }
         }
@@ -192,20 +191,21 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             return '<div class="color small static"><div class="color-preview"></div></div>';
         }
 
-        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->getColor('hex')};'></div></div>" .
+        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->getColor('hex')};'></div></div>".
             "<div class='colorhex code'>{$value->getColor('hex')}</div>";
     }
 
-    
+
     /**
      * --- Private functions -------------------------------------------------------
      */
-    
+
     /**
      * @param array $presets
+     *
      * @return array
      */
-    private function getPresetSelectOptions($presets): array
+    private function getPresetSelectOptions(array $presets): array
     {
         $opts = [];
 
@@ -221,25 +221,26 @@ class ColorMateField extends Field implements PreviewableFieldInterface
 
     /**
      * @param array $value
+     *
      * @return Color
      */
-    private function createColorModel($value): Color
+    private function createColorModel(array $value): Color
     {
         /** @var Settings $pluginSettings */
         $pluginSettings = ColorMate::$plugin->getSettings();
         $settings = $this->getSettings();
         $fieldPreset = $settings['preset'];
         $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
-        
+
         if (!isset($value['opacity']) || $value['opacity'] === '') {
             $value['opacity'] = 100;
         }
-        
+
         $value['opacity'] = (int)$value['opacity'];
-        
+
         $colorModel = new Color(array_filter(
             $value,
-            static function ($key) {
+            static function($key) {
                 return in_array($key, [
                     'handle',
                     'custom',
@@ -248,26 +249,24 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             },
             ARRAY_FILTER_USE_KEY
         ));
-        
+
         // todo : alt dette kan egentlig flyttes til constructor'en, det er egentlig bedre.
         $colorModel->preset = $presetConfig;
-        
+
         if ($colorModel->handle !== '' && $presetConfig) {
             $color = $presetConfig->getColorByHandle($colorModel->handle);
-            
+
             if ($color) {
                 $colorModel->baseColor = $color->color;
                 $colorModel->name = $color->name;
             } else {
                 $colorModel->baseColor = null;
             }
-            
         } else if ($colorModel->custom !== '') {
             $colorModel->baseColor = $colorModel->custom;
-            
         } else if ($presetConfig && $presetConfig->default) {
             $color = $presetConfig->getColorByHandle($presetConfig->default);
-            
+
             if ($color) {
                 $colorModel->baseColor = $color->color;
                 $colorModel->name = $color->name;
@@ -275,12 +274,11 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             } else {
                 $colorModel->baseColor = null;
             }
-            
         } else {
             $colorModel->baseColor = null;
         }
-        
+
         return $colorModel;
     }
-    
+
 }

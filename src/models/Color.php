@@ -1,11 +1,11 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 3.x
+ * ColorMate plugin for Craft CMS 4.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2020 Værsågod
+ * @copyright Copyright (c) 2022 Værsågod
  */
 
 namespace vaersaagod\colormate\models;
@@ -30,32 +30,32 @@ class Color extends Model
     /**
      * @var string
      */
-    public $handle = '';
+    public string $handle = '';
 
     /**
      * @var string
      */
-    public $custom = '';
+    public string $custom = '';
 
     /**
      * @var int
      */
-    public $opacity = 100;
+    public int $opacity = 100;
 
     /**
      * @var string
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      * @var string|null
      */
-    public $baseColor = null;
+    public ?string $baseColor = null;
 
     /**
      * @var null|Preset
      */
-    public $preset = null;
+    public ?Preset $preset = null;
 
     // Public Methods
     // =========================================================================
@@ -63,7 +63,7 @@ class Color extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['handle', 'string'],
@@ -85,9 +85,10 @@ class Color extends Model
 
     /**
      * @param string $format
+     *
      * @return string|null
      */
-    public function getColor($format = 'rgb')
+    public function getColor(string $format = 'rgb'): ?string
     {
         if ($this->baseColor === null) {
             return null;
@@ -95,7 +96,7 @@ class Color extends Model
         
         try {
             $color = ColorMate::$plugin->color->getColor($this->baseColor);
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return null;
         }
         
@@ -134,7 +135,7 @@ class Color extends Model
         
         try {
             $rgbColor = ColorMate::$plugin->color->getColor($this->baseColor)->getRgb();
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return false;
         }
 
