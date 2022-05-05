@@ -1,5 +1,13 @@
 # ColorMate Changelog
 
+## 2.0.0 - 2022-05-04
+### Added
+- Added Craft 4 version
+- Added tooltips to palette colors (fixed #12)
+- 
+### Fixed
+- Fixed an error that would occur if a field was configured with a preset that no longer exists (fixed #13)
+
 ## 1.0.7 - 2022-05-02
 ### Fixed
 - Fixed incorrect calculation of alpha component in output color
