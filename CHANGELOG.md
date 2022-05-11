@@ -1,10 +1,14 @@
 # ColorMate Changelog
 
+## 2.1.0 - 2022-05-11
+### Added
+- Added "Preview Mode" field setting  
+
 ## 2.0.0 - 2022-05-04
 ### Added
 - Added Craft 4 version
 - Added tooltips to palette colors (fixed #12)
-- 
+ 
 ### Fixed
 - Fixed an error that would occur if a field was configured with a preset that no longer exists (fixed #13)
 

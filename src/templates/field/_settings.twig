@@ -11,3 +11,27 @@
     value: field['preset'],
     errors: field.getErrors('preset') ?? null
 }) }}
+
+{{ forms.selectField({
+    label: 'Preview Mode'|t('app'),
+    id: 'previewMode',
+    name: 'previewMode',
+    value: field['previewMode'] ?? null,
+    instructions: 'How the selected color should be displayed within element indexes.'|t('colormate'),
+    options: [{
+        label: 'Color and hex value',
+        value: 'hex'
+    }, {
+        label: 'Color and RGB value',
+        value: 'rgb'
+    }, {
+        label: 'Color and handle'|t('colormate'),
+        value: 'handle'
+    }, {
+        label: 'Color and name'|t('colormate'),
+        value: 'name'
+    }, {
+        label: 'Color only'|t('colormate'),
+        value: 'colorOnly'
+    }]
+}) }}

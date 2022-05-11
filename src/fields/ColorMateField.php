@@ -15,6 +15,7 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\helpers\Html;
 use craft\helpers\Json;
 
 use vaersaagod\colormate\assetbundles\ColorMateFieldBundle;
@@ -30,16 +31,24 @@ use yii\db\Schema;
  *
  * @package ColorMate
  *
- * @property string        $contentColumnType
+ * @property string $contentColumnType
  * @property-read string[] $elementValidationRules
- * @property string        $settingsHtml
+ * @property string $settingsHtml
  */
 class ColorMateField extends Field implements PreviewableFieldInterface
 {
+
+    /** @var string */
     public const FIELD_VIEW_MODE_COMPACT = 'compact';
+
+    /** @var string */
     public const FIELD_VIEW_MODE_EXPANDED = 'expanded';
 
+    /** @var string */
     public string $preset = '';
+
+    /** @var string hex|rgb|handle|name|colorOnly */
+    public string $previewMode = 'hex';
 
     /**
      * @return string
@@ -58,7 +67,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return mixed
@@ -81,7 +90,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return array|mixed|string|null
@@ -90,7 +99,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     {
         return parent::serializeValue(array_filter(
             $value instanceof Color ? $value->getAttributes() : $value,
-            static function($key) {
+            static function ($key) {
                 return in_array($key, [
                     'handle',
                     'custom',
@@ -102,7 +111,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -170,6 +179,11 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         return ['validateField'];
     }
 
+    /**
+     * @param Element $element
+     * @return void
+     * @throws \craft\errors\InvalidFieldException
+     */
     public function validateField(Element $element): void
     {
         if ($element->getScenario() === Element::SCENARIO_LIVE) {
@@ -186,15 +200,40 @@ class ColorMateField extends Field implements PreviewableFieldInterface
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
-        /** @var Color|null $value */
-        if (!$value) {
-            return '<div class="color small static"><div class="color-preview"></div></div>';
+
+        if (!$value instanceof Color) {
+            return Html::tag('div', Html::tag('div', ''), [
+                'class' => 'color small static',
+            ]);
         }
 
-        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->getColor('hex')};'></div></div>".
-            "<div class='colorhex code'>{$value->getColor('hex')}</div>";
-    }
+        $html = Html::tag('div', Html::tag('div', null, [
+            'class' => 'color-preview',
+            'style' => [
+                'background-color' => $value->getColor('hex'),
+            ]
+        ]), [
+            'class' => 'color small static',
+        ]);
 
+        if ($this->previewMode === 'colorOnly') {
+            return $html;
+        }
+
+        if ($this->previewMode === 'handle') {
+            $label = $value->handle;
+        } else if ($this->previewMode === 'name') {
+            $label = Craft::t('site', $value->name);
+        } else if ($this->previewMode === 'rgb') {
+            $label = $value->getColor('rgb');
+        } else {
+            $label = $value->getColor('hex');
+        }
+
+        return $html . Html::tag('div', $label, [
+                'class' => 'colorhex code',
+            ]);
+    }
 
     /**
      * --- Private functions -------------------------------------------------------
@@ -240,7 +279,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
 
         $colorModel = new Color(array_filter(
             $value,
-            static function($key) {
+            static function ($key) {
                 return in_array($key, [
                     'handle',
                     'custom',
