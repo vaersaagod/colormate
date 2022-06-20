@@ -289,7 +289,6 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             ARRAY_FILTER_USE_KEY
         ));
 
-        // todo : alt dette kan egentlig flyttes til constructor'en, det er egentlig bedre.
         $colorModel->preset = $presetConfig;
 
         if ($colorModel->handle !== '' && $presetConfig) {
@@ -303,7 +302,9 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             }
         } else if ($colorModel->custom !== '') {
             $colorModel->baseColor = $colorModel->custom;
-        } else if ($presetConfig && $presetConfig->default) {
+        } 
+        
+        if ($colorModel->baseColor === null && $presetConfig && $presetConfig->default) {
             $color = $presetConfig->getColorByHandle($presetConfig->default);
 
             if ($color) {
@@ -311,7 +312,9 @@ class ColorMateField extends Field implements PreviewableFieldInterface
                 $colorModel->name = $color->name;
                 $colorModel->handle = $color->handle;
             } else {
+                Craft::error('Unknown default value "' . $presetConfig->default . '" in preset "' . $presetConfig->name . '"', __METHOD__);
                 $colorModel->baseColor = null;
+                
             }
         } else {
             $colorModel->baseColor = null;
