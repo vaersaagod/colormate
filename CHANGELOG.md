@@ -1,5 +1,12 @@
 # ColorMate Changelog
 
+## 2.2.0 - 2022-06-20
+### Added
+- Added support for different presets per site
+
+### Fixed
+- Fixed default value handling
+
 ## 2.1.0 - 2022-05-11
 ### Added
 - Added "Preview Mode" field setting  
