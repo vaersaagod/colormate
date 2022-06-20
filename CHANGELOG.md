@@ -1,5 +1,12 @@
 # ColorMate Changelog
 
+## 1.1.0 - 2022-06-20
+### Added
+- Added support for different presets per site
+
+### Fixed
+- Fixed default value handling
+
 ## 1.0.7 - 2022-05-02
 ### Fixed
 - Fixed incorrect calculation of alpha component in output color
