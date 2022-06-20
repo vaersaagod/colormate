@@ -15,6 +15,7 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\errors\InvalidFieldException;
 use craft\helpers\Html;
 use craft\helpers\Json;
 
@@ -86,7 +87,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             $value = [];
         }
 
-        return $this->createColorModel($value);
+        return $this->createColorModel($value, $element->site->handle ?? null);
     }
 
     /**
@@ -123,7 +124,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         $pluginSettings = ColorMate::$plugin->getSettings();
         $settings = $this->getSettings();
         $fieldPreset = $settings['preset'];
-        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
+        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset, $element->site->handle ?? null);
 
         if ($presetConfig) {
             $presetConfig->colors = $presetConfig->getColors();
@@ -182,7 +183,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     /**
      * @param Element $element
      * @return void
-     * @throws \craft\errors\InvalidFieldException
+     * @throws InvalidFieldException
      */
     public function validateField(Element $element): void
     {
@@ -259,17 +260,18 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param array $value
+     * @param array       $value
+     * @param string|null $siteHandle
      *
      * @return Color
      */
-    private function createColorModel(array $value): Color
+    private function createColorModel(array $value, string $siteHandle = null): Color
     {
         /** @var Settings $pluginSettings */
         $pluginSettings = ColorMate::$plugin->getSettings();
         $settings = $this->getSettings();
         $fieldPreset = $settings['preset'];
-        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
+        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset, $siteHandle);
 
         if (!isset($value['opacity']) || $value['opacity'] === '') {
             $value['opacity'] = 100;
