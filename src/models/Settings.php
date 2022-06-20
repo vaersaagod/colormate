@@ -42,13 +42,13 @@ class Settings extends Model
     /**
      * @return Preset[]
      */
-    public function getPresets(): array
+    public function getPresets(string $siteHandle = null): array
     {
         $r = [];
 
         foreach ($this->presets as $handle => $preset) {
             $r[] = new Preset(array_merge(
-                $preset,
+                $this->getLocalizedPreset($preset, $siteHandle),
                 ['handle' => $handle]
             ));
         }
@@ -56,20 +56,36 @@ class Settings extends Model
         return $r;
     }
 
-    /**
-     * @param string $handle
-     * @return Preset|null
-     */
-    public function getPresetByHandle($handle)
+    public function getPresetByHandle($handle, string $siteHandle = null)
     {
         if (!isset($this->presets[$handle])) {
             return null;
         }
-
+        
+        if ($siteHandle === null) {
+            $siteHandle = \Craft::$app->getSites()->getCurrentSite()->handle;
+        }
+        
         return new Preset(array_merge(
-            $this->presets[$handle],
+            $this->getLocalizedPreset($this->presets[$handle], $siteHandle),
             ['handle' => $handle]
         ));
     }
 
+    public function getLocalizedPreset(array $value, string $siteHandle = null)
+    {
+        if ($siteHandle === null) {
+            $siteHandle = \Craft::$app->getSites()->getCurrentSite()->handle;
+        }
+        
+        if (array_key_exists($siteHandle, $value)) {
+            return $value[$siteHandle];
+        }
+        
+        if (array_key_exists('*', $value)) {
+            return $value['*'];
+        }
+        
+        return $value;
+    }
 }

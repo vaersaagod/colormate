@@ -74,7 +74,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             $value = [];
         }
 
-        return $this->createColorModel($value);
+        return $this->createColorModel($value, $element->site->handle ?? null);
     }
 
     /**
@@ -109,7 +109,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         $pluginSettings = ColorMate::$plugin->getSettings();
         $settings = $this->getSettings();
         $fieldPreset = $settings['preset'];
-        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
+        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset, $element->site->handle ?? null);
 
         if ($presetConfig) {
             $presetConfig->colors = $presetConfig->getColors();
@@ -205,7 +205,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
      * @param array $presets
      * @return array
      */
-    private function getPresetSelectOptions($presets): array
+    private function getPresetSelectOptions(array $presets): array
     {
         $opts = [];
 
@@ -220,16 +220,18 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param array $value
+     * @param array       $value
+     * @param string|null $siteHandle
+     *
      * @return Color
      */
-    private function createColorModel($value): Color
+    private function createColorModel(array $value, string $siteHandle = null): Color
     {
         /** @var Settings $pluginSettings */
         $pluginSettings = ColorMate::$plugin->getSettings();
         $settings = $this->getSettings();
         $fieldPreset = $settings['preset'];
-        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset);
+        $presetConfig = $pluginSettings->getPresetByHandle($fieldPreset, $siteHandle);
         
         if (!isset($value['opacity']) || $value['opacity'] === '') {
             $value['opacity'] = 100;
@@ -249,7 +251,6 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             ARRAY_FILTER_USE_KEY
         ));
         
-        // todo : alt dette kan egentlig flyttes til constructor'en, det er egentlig bedre.
         $colorModel->preset = $presetConfig;
         
         if ($colorModel->handle !== '' && $presetConfig) {
