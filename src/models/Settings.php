@@ -73,7 +73,7 @@ class Settings extends Model
             return $value[$siteHandle];
         }
         
-        if (array_key_exists('*', $value) && is_array($value[$siteHandle])) {
+        if (array_key_exists('*', $value) && is_array($value['*'])) {
             return $value['*'];
         }
         
