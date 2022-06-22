@@ -62,19 +62,18 @@ class Settings extends Model
             ['handle' => $handle]
         ));
     }
-
-
+    
     public function getLocalizedPreset(array $value, string $siteHandle = null)
     {
         if ($siteHandle === null) {
             $siteHandle = \Craft::$app->getSites()->getCurrentSite()->handle;
         }
         
-        if (array_key_exists($siteHandle, $value)) {
+        if (array_key_exists($siteHandle, $value) && is_array($value[$siteHandle])) {
             return $value[$siteHandle];
         }
         
-        if (array_key_exists('*', $value)) {
+        if (array_key_exists('*', $value) && is_array($value[$siteHandle])) {
             return $value['*'];
         }
         
