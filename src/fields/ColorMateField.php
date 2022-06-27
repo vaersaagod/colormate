@@ -279,9 +279,6 @@ class ColorMateField extends Field implements PreviewableFieldInterface
                 Craft::error('Unknown default value "' . $presetConfig->default . '" in preset "' . $presetConfig->name . '"', __METHOD__);
                 $colorModel->baseColor = null;
             }
-            
-        } else {
-            $colorModel->baseColor = null;
         }
         
         return $colorModel;
