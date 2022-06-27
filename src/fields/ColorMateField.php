@@ -318,9 +318,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
                 $colorModel->baseColor = null;
                 
             }
-        } else {
-            $colorModel->baseColor = null;
-        }
+        } 
 
         return $colorModel;
     }
