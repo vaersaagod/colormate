@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 2.2.1.2 - 2022-06-27
+### Fixed
+- Fixed regression that would cause custom colors to always be set to null.
+ 
 ## 2.2.1.1 - 2022-06-22
 ### Fixed
 - Fixed stupid copypaste bug
