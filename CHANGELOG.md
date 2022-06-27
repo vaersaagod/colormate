@@ -2,7 +2,7 @@
 
 ## 1.1.1.2 - 2022-06-27
 ### Fixed
-- Fixed issue where having a site handle that matched one of colormates preset properties, could lead to errors.
+- Fixed regression that would cause custom colors to always be set to null.
 
 ## 1.1.1.1 - 2022-06-22
 ### Fixed
