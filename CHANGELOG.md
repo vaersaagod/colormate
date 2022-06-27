@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 1.1.1.2 - 2022-06-27
+### Fixed
+- Fixed issue where having a site handle that matched one of colormates preset properties, could lead to errors.
+
 ## 1.1.1.1 - 2022-06-22
 ### Fixed
 - Fixed stupid copypaste bug
