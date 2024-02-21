@@ -1,7 +1,7 @@
 {
   "name": "vaersaagod/colormate",
   "description": "Color me impressed, mate!",
-  "version": "2.2.1.2",
+  "version": "3.0.0-beta.1",
   "type": "craft-plugin",
   "keywords": [
     "craft",
@@ -23,8 +23,8 @@
     }
   ],
   "require": {
-    "php": "^8.0",
-    "craftcms/cms": "^4.0.0",
+    "php": "^8.2",
+    "craftcms/cms": "^5.0.0-beta.1",
     "ssnepenthe/color-utils": "~0.4"
   },
   "autoload": {
