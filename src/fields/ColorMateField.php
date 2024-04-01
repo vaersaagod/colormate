@@ -197,7 +197,12 @@ class ColorMateField extends Field implements PreviewableFieldInterface
         }
     }
 
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    /**
+     * @param $value
+     * @param ElementInterface $element
+     * @return string
+     */
+    public function getPreviewHtml($value, ElementInterface $element): string
     {
         if (!$value instanceof Color) {
             return Html::tag('div', Html::tag('div', ''), [
