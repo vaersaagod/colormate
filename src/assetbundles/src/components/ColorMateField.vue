@@ -5,7 +5,7 @@
                 <button type="button" class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
                 </button>
-                <span v-if="showTooltip" class="colormate-field__color-name">{{ color.name }}</span>
+                <craft-tooltip placement="top" v-if="showTooltip">{{ color.name }}</craft-tooltip>
             </li>
         </ul>
 
@@ -16,13 +16,15 @@
                 </div>
                 <input ref="customColorPickerInput" class="colormate-field__color-picker-input" type="color" v-model="customColorPickerInput">
                 <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
+                <craft-tooltip placement="top" v-if="showTooltip">{{ $Craft.t('colormate', 'Custom color') }}</craft-tooltip>
             </div>
 
             <div class="colormate-field__input" v-if="showOpacity">
                 <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
+                <craft-tooltip placement="top" v-if="showTooltip">{{ $Craft.t('colormate', 'Opacity') }}</craft-tooltip>
             </div>
 
-            <button type="button" class="colormate-field__clear" v-on:click="onClearClick" v-if="showClear && ((selectedColorHandle !== '' && selectedColorHandle !== presetConfig.default) || customColor !== '' || parseInt(customOpacityInput) !== 100)">
+            <button type="button" class="colormate-field__clear" v-on:click="onClearClick" v-if="doShowClear">
                 <div class="colormate-field__clear-inner"></div>
             </button>
         </div>
@@ -57,6 +59,9 @@ export default {
         },
         hasPalette() {
             return this.colors.length > 0;
+        },
+        doShowClear() {
+            return this.showClear && ((this.selectedColorHandle !== '' && this.selectedColorHandle !== this.presetConfig.default) || this.customColor !== '' || parseInt(this.customOpacityInput) !== 100);
         }
     },
     watch: {
@@ -214,43 +219,6 @@ export default {
 
         * {
             pointer-events: none;
-        }
-
-        &-name {
-            display: inline-block;
-            position: absolute;
-            z-index: 2;
-            padding: 3px 10px;
-            border-radius: 3px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fdfdfd;
-            font-size: 11px;
-            left: 17px;
-            top: -22px;
-            white-space: nowrap;
-            pointer-events: none;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition-property: opacity, top;
-            transition-duration: 0.1s, 0.5s;
-            transition-timing-function: ease-out, cubic-bezier(0.22, 1, 0.36, 1);
-            
-            &:after {
-                content: '';
-                position: absolute;
-                left: calc(50% - 5px);
-                bottom: -6px;
-                width: 0;
-                height: 0;
-                border-left: 6px solid transparent;
-                border-right: 6px solid transparent;
-                border-top: 6px solid rgba(0, 0, 0, 0.7);
-            }
-
-            li:hover & {
-                opacity: 1;
-                top: -28px;
-            }
         }
 
         &:not(.-selected-color) {
