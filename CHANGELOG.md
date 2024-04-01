@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 2.2.3.1 - 2024-04-02
+### Fixed
+- Add that min-height back in 🙃
+
 ## 2.2.3 - 2024-04-01 
 ### Fixed
 - Fixed a CSS bug in element indexes ([#19](https://github.com/vaersaagod/colormate/issues/19))
