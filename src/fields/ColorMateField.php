@@ -212,6 +212,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             ]
         ]), [
             'class' => 'color small static',
+            'style' => 'flex: none;',
         ]);
 
         if ($this->previewMode === 'colorOnly') {
@@ -228,8 +229,11 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             $label = $value->getColor('hex');
         }
 
-        return $html . Html::tag('div', $label, [
-                'class' => 'colorhex code',
+        return
+            Html::tag('div', $html . Html::tag('div', $label, [
+                    'class' => 'colorhex code',
+                ]), [
+                'style' => 'display:flex;',
             ]);
     }
 
@@ -257,7 +261,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param array       $value
+     * @param array $value
      * @param string|null $siteHandle
      *
      * @return Color
@@ -301,8 +305,8 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             }
         } else if ($colorModel->custom !== '') {
             $colorModel->baseColor = $colorModel->custom;
-        } 
-        
+        }
+
         if ($colorModel->baseColor === null && $presetConfig && $presetConfig->default) {
             $color = $presetConfig->getColorByHandle($presetConfig->default);
 
@@ -313,9 +317,9 @@ class ColorMateField extends Field implements PreviewableFieldInterface
             } else {
                 Craft::error('Unknown default value "' . $presetConfig->default . '" in preset "' . $presetConfig->name . '"', __METHOD__);
                 $colorModel->baseColor = null;
-                
+
             }
-        } 
+        }
 
         return $colorModel;
     }

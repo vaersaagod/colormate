@@ -1,30 +1,30 @@
 <template>
     <div class="colormate-field" v-bind:class="{ 'colormate-field--has-no-palette': !hasPalette }" ref="wrapper">
-        <ul v-if="colors.length > 0">
-            <li v-for="color in colors">
-                <div class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
+        <ul class="colormate-field__colors" v-if="colors.length > 0">
+            <li class="colormate-field__colors-item" v-for="color in colors">
+                <button type="button" class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
-                </div>
+                </button>
                 <span v-if="showTooltip" class="colormate-field__color-name">{{ color.name }}</span>
             </li>
         </ul>
 
         <div class="colormate-field__inputs input" v-if="showCustom || showOpacity || showClear">
-            <div class="colormate-field__input-wrap" v-if="showCustom">
-                <div class="colormate-field__color -custom-color" v-bind:class="{ '-selected-color': parsedCustomColor !== null }">
+            <div class="colormate-field__input" v-if="showCustom">
+                <div class="colormate-field__color colormate-field__input-custom-color" v-bind:class="{ '-selected-color': parsedCustomColor !== null }">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + (parsedCustomColor ? parsedCustomColor : '#fff') + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
                 </div>
                 <input ref="customColorPickerInput" class="colormate-field__color-picker-input" type="color" v-model="customColorPickerInput">
                 <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
             </div>
 
-            <div class="colormate-field__input-wrap" v-if="showOpacity">
+            <div class="colormate-field__input" v-if="showOpacity">
                 <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
             </div>
 
-            <div class="colormate-field__clear" v-on:click="onClearClick" v-if="showClear && ((selectedColorHandle !== '' && selectedColorHandle !== presetConfig.default) || customColor !== '' || parseInt(customOpacityInput) !== 100)">
+            <button type="button" class="colormate-field__clear" v-on:click="onClearClick" v-if="showClear && ((selectedColorHandle !== '' && selectedColorHandle !== presetConfig.default) || customColor !== '' || parseInt(customOpacityInput) !== 100)">
                 <div class="colormate-field__clear-inner"></div>
-            </div>
+            </button>
         </div>
     </div>
 </template>
@@ -177,37 +177,40 @@ export default {
 <style lang="scss">
 .colormate-field {
     display: flex;
-    align-items: flex-start;
 
     * {
         box-sizing: border-box;
     }
 
-    li {
-        display: inline-block;
-    }
+    &__colors {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: -5px;
 
-    ul {
-        margin-right: 12px;
-    }
-
-    li {
-        position: relative;
+        &-item {
+            display: block;
+            position: relative;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 
     &__color {
         position: relative;
-        display: inline-block;
+        display: block;
         width: 34px;
         height: 34px;
         box-shadow: inset 0 10px 20px rgba(255, 255, 255, 0.3), inset 0 -10px 20px rgba(0, 0, 0, 0.07);
-        margin-right: 5px;
         background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='nonzero' fill='none'%3E%3Cpath id='Rectangle' fill='%23EAECEE' d='M0 0h18v18H0z'/%3E%3Cpath id='Rectangle-Copy' fill='%23D5D8DD' d='M0 0h9v9H0z'/%3E%3Cpath id='Rectangle-Copy-4' fill='%23D5D8DD' d='M8 9h9v9H9z'/%3E%3C/g%3E%3C/svg%3E");
         background-repeat: repeat;
         background-position: center;
         border-radius: 5px;
         cursor: pointer;
         overflow: hidden;
+        flex: none;
 
         * {
             pointer-events: none;
@@ -306,35 +309,41 @@ export default {
         }
     }
 
+    &__colors + &__inputs {
+        margin-left: 10px;
+    }
+
     &__inputs {
         display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: -5px;
     }
 
-    &__input-wrap {
+    &__input {
         position: relative;
         display: flex;
-        margin-left: 12px;
-
-        &:first-child {
-            margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        &:last-child {
+            margin-right: 0;
         }
-    }
-
-    &__input-color {
-        width: 85px;
-
-    }
-
-    &__input-opacity {
-        width: 60px;
-        margin-left: 5px;
+        &-color {
+            width: 85px;
+        }
+        &-custom-color {
+            margin-right: 3px;
+        }
+        &-opacity {
+            width: 60px;
+        }
     }
 
     &__clear {
         cursor: pointer;
         padding: 5px;
-        margin-top: 3px;
-        margin-left: 12px;
+        align-self: center;
+        margin-bottom: 5px;
 
         &:hover {
             .colormate-field__clear-inner {
