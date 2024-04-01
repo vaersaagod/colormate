@@ -3,6 +3,8 @@
 ## Unreleased 
 ### Fixed
 - Fixed a CSS bug in element indexes ([#19](https://github.com/vaersaagod/colormate/issues/19))
+### Improved
+- Improves horizontal whitespace in ColorMate fields UI ([#17](https://github.com/vaersaagod/colormate/issues/17))
 
 ## 2.2.1.2 - 2022-06-27
 ### Fixed
