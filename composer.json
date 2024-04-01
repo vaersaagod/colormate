@@ -24,7 +24,7 @@
   ],
   "require": {
     "php": "^8.2",
-    "craftcms/cms": "^5.0.0-beta.1",
+    "craftcms/cms": "^5.0.0",
     "ssnepenthe/color-utils": "~0.4"
   },
   "autoload": {
