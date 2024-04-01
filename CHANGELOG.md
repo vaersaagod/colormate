@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## Unreleased 
+### Fixed
+- Fixed a CSS bug in element indexes ([#19](https://github.com/vaersaagod/colormate/issues/19))
+
 ## 2.2.1.2 - 2022-06-27
 ### Fixed
 - Fixed regression that would cause custom colors to always be set to null.
