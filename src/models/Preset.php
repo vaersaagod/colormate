@@ -10,7 +10,9 @@
 
 namespace vaersaagod\colormate\models;
 
+use Craft;
 use craft\base\Model;
+
 use vaersaagod\colormate\fields\ColorMateField;
 
 /**
@@ -32,6 +34,7 @@ class Preset extends Model
 
     /**
      * @var string
+     * @deprecated Since 2.3.0
      */
     public string $viewMode = ColorMateField::FIELD_VIEW_MODE_COMPACT;
 
@@ -64,7 +67,15 @@ class Preset extends Model
      * @var string|null
      */
     public ?string $default = null;
-    
+
+    /** @inheritdoc */
+    public function init(): void
+    {
+        parent::init();
+        if (!empty($this->viewMode)) {
+            Craft::$app->getDeprecator()->log(__METHOD__, "The `viewMode` preset config setting is deprecated. You should remove references to it from your `colormate.php` config file.");
+        }
+    }
 
     /**
      * @return PresetColor[]

@@ -39,10 +39,16 @@ use yii\db\Schema;
 class ColorMateField extends Field implements PreviewableFieldInterface
 {
 
-    /** @var string */
+    /**
+     * @var string
+     * @deprecated Since 2.3.0
+     */
     public const FIELD_VIEW_MODE_COMPACT = 'compact';
 
-    /** @var string */
+    /**
+     * @var string
+     * @deprecated Since 2.3.0
+     */
     public const FIELD_VIEW_MODE_EXPANDED = 'expanded';
 
     /** @var string */

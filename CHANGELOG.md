@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 2.3.0 - 2024-04-13
+### Changed
+- Deprecated the `viewMode` config setting for presets  
+
 ## 2.2.3.1 - 2024-04-02
 ### Fixed
 - Add that min-height back in 🙃
