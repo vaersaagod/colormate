@@ -25,7 +25,6 @@ use vaersaagod\colormate\models\Color;
 use vaersaagod\colormate\models\Settings;
 
 use Throwable;
-use yii\db\Schema;
 
 /**
  * Class ColorMateField
@@ -38,12 +37,6 @@ use yii\db\Schema;
  */
 class ColorMateField extends Field implements PreviewableFieldInterface
 {
-
-    /** @var string */
-    public const FIELD_VIEW_MODE_COMPACT = 'compact';
-
-    /** @var string */
-    public const FIELD_VIEW_MODE_EXPANDED = 'expanded';
 
     /** @var string */
     public string $preset = '';

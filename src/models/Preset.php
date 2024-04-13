@@ -11,7 +11,6 @@
 namespace vaersaagod\colormate\models;
 
 use craft\base\Model;
-use vaersaagod\colormate\fields\ColorMateField;
 
 /**
  * @author    Værsågod
@@ -29,11 +28,6 @@ class Preset extends Model
      * @var string
      */
     public string $handle = '';
-
-    /**
-     * @var string
-     */
-    public string $viewMode = ColorMateField::FIELD_VIEW_MODE_COMPACT;
 
     /**
      * @var boolean
