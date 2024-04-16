@@ -69,10 +69,10 @@ class Preset extends Model
     public ?string $default = null;
 
     /** @inheritdoc */
-    public function init(): void
+    public function __construct($config = [])
     {
-        parent::init();
-        if (!empty($this->viewMode)) {
+        parent::__construct($config);
+        if (isset($config['viewMode'])) {
             Craft::$app->getDeprecator()->log(__METHOD__, "The `viewMode` preset config setting is deprecated. You should remove references to it from your `colormate.php` config file.");
         }
     }
