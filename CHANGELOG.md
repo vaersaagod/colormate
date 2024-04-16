@@ -1,6 +1,6 @@
 # ColorMate Changelog
 
-## 2.3.1 - 2024-04-13
+## 2.3.1 - 2024-04-16
 ### Fixed
 - Fixed a bug with persistent deprecation notice for the `viewMode` config setting for presets
 
