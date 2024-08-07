@@ -5,7 +5,7 @@
                 <button type="button" class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
                 </button>
-                <craft-tooltip placement="top" v-if="showTooltip">{{ color.name }}</craft-tooltip>
+                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('site', color.name)" delay="0" self-managed></craft-tooltip>
             </li>
         </ul>
 
@@ -16,12 +16,12 @@
                 </div>
                 <input ref="customColorPickerInput" class="colormate-field__color-picker-input" type="color" v-model="customColorPickerInput">
                 <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
-                <craft-tooltip placement="top" v-if="showTooltip">{{ $Craft.t('colormate', 'Custom color') }}</craft-tooltip>
+                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('colormate', 'Custom color')" delay="0" self-managed></craft-tooltip>
             </div>
 
             <div class="colormate-field__input" v-if="showOpacity">
                 <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
-                <craft-tooltip placement="top" v-if="showTooltip">{{ $Craft.t('colormate', 'Opacity') }}</craft-tooltip>
+                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('colormate', 'Opacity')" delay="0" self-managed></craft-tooltip>
             </div>
 
             <button type="button" class="colormate-field__clear" v-on:click="onClearClick" v-if="doShowClear">
