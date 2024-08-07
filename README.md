@@ -7,7 +7,7 @@ Color me impressed, mate!
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0 or later. 
+This plugin requires Craft CMS 5.0.0 or later. 
 
 ## Installation
 
@@ -31,7 +31,6 @@ return [
         'presets' => [
             'ctaColors' => [
                 'name' => 'CTA Colors',
-                'viewMode' => \vaersaagod\colormate\fields\ColorMateField::FIELD_VIEW_MODE_EXPANDED,
                 'showCustom' => true,
                 'showOpacity' => true,
                 'showClear' => false,
@@ -59,7 +58,6 @@ return [
 
             'overlayColors' => [
                 'name' => 'Overlay Colors',
-                'viewMode' => \vaersaagod\colormate\fields\ColorMateField::FIELD_VIEW_MODE_COMPACT,
                 'showCustom' => false,
                 'showOpacity' => false,
                 'showClear' => true,

@@ -1,11 +1,11 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 4.x
+ * ColorMate plugin for Craft CMS 5.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2022 Værsågod
+ * @copyright Copyright (c) 2024 Værsågod
  */
 
 namespace vaersaagod\colormate;

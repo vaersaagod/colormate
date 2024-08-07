@@ -4,6 +4,8 @@ import ColorMateField from './components/ColorMateField.vue';
 
 import './css/field.css';
 
+Vue.prototype.$Craft = window.Craft;
+
 window.Craft.ColorMateField = config => {
     new Vue({
         el: config.appId,
@@ -14,8 +16,6 @@ window.Craft.ColorMateField = config => {
             baseInputId: config.baseInputId,
             presetConfig: config.presetConfig,
             fieldValue: config.fieldValue
-        },
-        mounted() {
         }
     });
 };

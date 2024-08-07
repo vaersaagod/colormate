@@ -1,11 +1,11 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 4.x
+ * ColorMate plugin for Craft CMS 5.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2022 Værsågod
+ * @copyright Copyright (c) 2024 Værsågod
  */
 
 namespace vaersaagod\colormate\fields;
@@ -25,7 +25,6 @@ use vaersaagod\colormate\models\Color;
 use vaersaagod\colormate\models\Settings;
 
 use Throwable;
-use yii\db\Schema;
 
 /**
  * Class ColorMateField
@@ -39,30 +38,19 @@ use yii\db\Schema;
 class ColorMateField extends Field implements PreviewableFieldInterface
 {
 
-    /**
-     * @var string
-     * @deprecated Since 2.3.0
-     */
-    public const FIELD_VIEW_MODE_COMPACT = 'compact';
-
-    /**
-     * @var string
-     * @deprecated Since 2.3.0
-     */
-    public const FIELD_VIEW_MODE_EXPANDED = 'expanded';
-
     /** @var string */
     public string $preset = '';
 
     /** @var string hex|rgb|handle|name|colorOnly */
     public string $previewMode = 'hex';
 
+   
     /**
-     * @return string
+     * @inerhitdoc 
      */
-    public function getContentColumnType(): string
+    public static function icon(): string
     {
-        return Schema::TYPE_TEXT;
+        return 'palette';
     }
 
     /**
@@ -70,7 +58,7 @@ class ColorMateField extends Field implements PreviewableFieldInterface
      */
     public static function displayName(): string
     {
-        return Craft::t('colormate', 'ColorMate field');
+        return Craft::t('colormate', 'ColorMate');
     }
 
     /**
@@ -203,11 +191,12 @@ class ColorMateField extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $value
+     * @param ElementInterface $element
+     * @return string
      */
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getPreviewHtml($value, ElementInterface $element): string
     {
-
         if (!$value instanceof Color) {
             return Html::tag('div', Html::tag('div', ''), [
                 'class' => 'color small static',

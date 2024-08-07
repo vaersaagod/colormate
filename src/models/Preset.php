@@ -1,19 +1,17 @@
 <?php
 /**
- * ColorMate plugin for Craft CMS 4.x
+ * ColorMate plugin for Craft CMS 5.x
  *
  * Color me impressed, mate!
  *
  * @link      https://www.vaersaagod.no
- * @copyright Copyright (c) 2022 Værsågod
+ * @copyright Copyright (c) 2024 Værsågod
  */
 
 namespace vaersaagod\colormate\models;
 
 use Craft;
 use craft\base\Model;
-
-use vaersaagod\colormate\fields\ColorMateField;
 
 /**
  * @author    Værsågod
@@ -31,12 +29,6 @@ class Preset extends Model
      * @var string
      */
     public string $handle = '';
-
-    /**
-     * @var string
-     * @deprecated Since 2.3.0
-     */
-    public string $viewMode = ColorMateField::FIELD_VIEW_MODE_COMPACT;
 
     /**
      * @var boolean
