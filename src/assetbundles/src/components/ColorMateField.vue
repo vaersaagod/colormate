@@ -339,5 +339,9 @@ export default {
             }
         }
     }
+
+    .slideout-container & .craft-tooltip {
+        position: absolute !important;
+    }
 }
 </style>
