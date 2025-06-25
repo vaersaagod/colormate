@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## 3.1.0 - 2025-06-25
+### Added
+- ColorMate fields are now mergable via the core `fields/merge` CLI command.  
+
 ## 3.0.1 - 2024-10-24
 ### Fixed 
 - Fixed an issue where palette tooltips would be mispositioned inside slideouts

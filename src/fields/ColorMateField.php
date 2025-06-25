@@ -14,6 +14,7 @@ use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\base\MergeableFieldInterface;
 use craft\base\PreviewableFieldInterface;
 use craft\errors\InvalidFieldException;
 use craft\helpers\Html;
@@ -35,7 +36,7 @@ use Throwable;
  * @property-read string[] $elementValidationRules
  * @property string $settingsHtml
  */
-class ColorMateField extends Field implements PreviewableFieldInterface
+class ColorMateField extends Field implements PreviewableFieldInterface, MergeableFieldInterface
 {
 
     /** @var string */
