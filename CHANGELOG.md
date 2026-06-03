@@ -1,6 +1,6 @@
 # ColorMate Changelog
 
-## Unreleased
+## 3.2.0 - 2026-06-03
 ### Fixed 
 - Fixed missing tooltips on Craft 5.9+
 ### Changed
