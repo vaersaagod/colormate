@@ -1,5 +1,9 @@
 # ColorMate Changelog
 
+## Unreleased
+### Fixed 
+- Fixed missing tooltips on Craft 5.9+
+
 ## 3.1.0 - 2025-06-25
 ### Added
 - ColorMate fields are now mergable via the core `fields/merge` CLI command.  

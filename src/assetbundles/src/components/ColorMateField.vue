@@ -1,12 +1,23 @@
 <template>
     <div class="colormate-field" v-bind:class="{ 'colormate-field--has-no-palette': !hasPalette }" ref="wrapper">
         <ul class="colormate-field__colors" v-if="colors.length > 0">
-            <li class="colormate-field__colors-item" v-for="color in colors">
-                <button type="button" class="colormate-field__color" v-bind:class="{ '-selected-color': color.handle === selectedColorHandle }" v-on:click="onColorClick(color)">
-                    <span class="colormate-field__color-inner" v-bind:style="'background-color:' + color.color + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
-                </button>
-                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('site', color.name)" delay="0" self-managed></craft-tooltip>
-            </li>
+          <li class="colormate-field__colors-item" v-for="color in colors" :key="color.handle">
+            <craft-tooltip v-if="showTooltip" placement="top" :text="$Craft.t('site', color.name)" delay="0" self-managed>
+              <color-button
+                  :color="color"
+                  :selected-color-handle="selectedColorHandle"
+                  :global-opacity="parsedGlobalOpacity"
+                  @select="onColorClick"
+              />
+            </craft-tooltip>
+            <color-button
+                v-else
+                :color="color"
+                :selected-color-handle="selectedColorHandle"
+                :global-opacity="parsedGlobalOpacity"
+                @select="onColorClick"
+            />
+          </li>
         </ul>
 
         <div class="colormate-field__inputs input" v-if="showCustom || showOpacity || showClear">
@@ -15,13 +26,17 @@
                     <span class="colormate-field__color-inner" v-bind:style="'background-color:' + (parsedCustomColor ? parsedCustomColor : '#fff') + ';' + ' opacity:' + parsedGlobalOpacity + ';'"></span>
                 </div>
                 <input ref="customColorPickerInput" class="colormate-field__color-picker-input" type="color" v-model="customColorPickerInput">
-                <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
-                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('colormate', 'Custom color')" delay="0" self-managed></craft-tooltip>
+                <craft-tooltip placement="top" v-if="showTooltip" :text="$Craft.t('colormate', 'Custom color')" delay="0" self-managed>
+                  <input ref="customColorInput" class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
+                </craft-tooltip>
+                <input ref="customColorInput" v-else class="colormate-field__input-color text" type="text" placeholder="#000000" v-model="customColorInput" maxlength="7">
             </div>
 
             <div class="colormate-field__input" v-if="showOpacity">
-                <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
-                <craft-tooltip placement="top" v-if="showTooltip" :aria-label="$Craft.t('colormate', 'Opacity')" delay="0" self-managed></craft-tooltip>
+                <craft-tooltip placement="top" v-if="showTooltip" :text="$Craft.t('colormate', 'Opacity')" delay="0" self-managed>
+                  <input ref="customOpacityInput" class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
+                </craft-tooltip>
+                <input ref="customOpacityInput" v-else class="colormate-field__input-opacity text" type="number" value="100" min="0" max="100" maxlength="3" v-model="customOpacityInput">
             </div>
 
             <button type="button" class="colormate-field__clear" v-on:click="onClearClick" v-if="doShowClear">
@@ -33,6 +48,7 @@
 
 <script>
 import colorString from 'color-string';
+import ColorButton from './ColorButton.vue';
 
 export default {
     name: 'ColorMateField.vue',
@@ -41,7 +57,7 @@ export default {
         presetConfig: Object,
         fieldValue: Object
     },
-    components: {},
+    components: { ColorButton },
     computed: {
         parsedCustomColor() {
             if (this.customColorInput === '') {
